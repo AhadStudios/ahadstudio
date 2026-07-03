@@ -89,20 +89,24 @@ export default function OurWork({ variant = "full" }) {
           "[data-our-work-footer-item]",
         );
 
-        gsap.from(footerItems, {
-          y: 32,
-          autoAlpha: 0,
-          duration: 0.95,
-          stagger: 0.1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: footerRef.current,
-            start: "top 90%",
-            toggleActions: "play none none none",
-            once: true,
-            ...scrollTriggerBase,
+        gsap.fromTo(
+          footerItems,
+          { y: 32, autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.95,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: "top 90%",
+              toggleActions: "restart none restart none",
+              invalidateOnRefresh: true,
+              ...scrollTriggerBase,
+            },
           },
-        });
+        );
       }
     }, section);
 

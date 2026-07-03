@@ -37,18 +37,22 @@ function setupTrustedBrandsStory() {
   const section = document.querySelector(".trusted-brands");
   if (!section) return;
 
-  gsap.from(".trusted-brands-inner", {
-    y: 56,
-    autoAlpha: 0,
-    duration: 1.15,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: section,
-      start: "top 82%",
-      toggleActions: "play none none none",
-      once: true,
+  gsap.fromTo(
+    ".trusted-brands-inner",
+    { y: 56, autoAlpha: 0 },
+    {
+      y: 0,
+      autoAlpha: 1,
+      duration: 1.15,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: section,
+        start: "top 82%",
+        toggleActions: "restart none restart none",
+        invalidateOnRefresh: true,
+      },
     },
-  });
+  );
 }
 
 function setupProductDesignerHeaderStory() {
@@ -63,23 +67,21 @@ function setupProductDesignerHeaderStory() {
 
   if (!header || !title) return;
 
-  gsap.set(title, { y: 48, autoAlpha: 0 });
-  gsap.set(introItems, { y: 32, autoAlpha: 0 });
-
   const timeline = gsap.timeline({
     defaults: STORY_DEFAULTS,
     scrollTrigger: {
       trigger: header,
       start: "top 82%",
-      toggleActions: "play none none none",
-      once: true,
+      toggleActions: "restart none restart none",
+      invalidateOnRefresh: true,
     },
   });
 
   timeline
-    .to(title, { y: 0, autoAlpha: 1, duration: 0.9, ease: "power3.out" })
-    .to(
+    .fromTo(title, { y: 48, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.9, ease: "power3.out" })
+    .fromTo(
       introItems,
+      { y: 32, autoAlpha: 0 },
       { y: 0, autoAlpha: 1, duration: 0.8, stagger: 0.08, ease: "power3.out" },
       "-=0.55",
     );
@@ -105,11 +107,8 @@ function setupStickerBoardStory() {
       scrollTrigger: {
         trigger: panel,
         start: "top 88%",
-        toggleActions: "play none none none",
-        once: true,
-      },
-      onComplete: () => {
-        gsap.set(panel, { clearProps: "filter,y" });
+        toggleActions: "restart none restart none",
+        invalidateOnRefresh: true,
       },
     },
   );
@@ -176,36 +175,32 @@ function setupContactPageStory() {
   const features = section.querySelectorAll(".contact-page-feature");
   const card = section.querySelector(".contact-page-form-card");
 
-  if (title) gsap.set(title, { y: 48, autoAlpha: 0 });
-  if (lead) gsap.set(lead, { y: 36, autoAlpha: 0 });
-  if (features.length) gsap.set(features, { y: 32, autoAlpha: 0 });
-  if (card) gsap.set(card, { y: 40, autoAlpha: 0 });
-
   const timeline = gsap.timeline({
     defaults: STORY_DEFAULTS,
     scrollTrigger: {
       trigger: section,
       start: "top 78%",
-      toggleActions: "play none none none",
-      once: true,
+      toggleActions: "restart none restart none",
+      invalidateOnRefresh: true,
     },
   });
 
   if (title) {
-    timeline.to(title, { y: 0, autoAlpha: 1, duration: 1.1, ease: "power3.out" });
+    timeline.fromTo(title, { y: 48, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.1, ease: "power3.out" });
   }
   if (lead) {
-    timeline.to(lead, { y: 0, autoAlpha: 1, duration: 1, ease: "power3.out" }, "-=0.55");
+    timeline.fromTo(lead, { y: 36, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, ease: "power3.out" }, "-=0.55");
   }
   if (features.length) {
-    timeline.to(
+    timeline.fromTo(
       features,
+      { y: 32, autoAlpha: 0 },
       { y: 0, autoAlpha: 1, duration: 0.95, stagger: 0.12, ease: "power3.out" },
       "-=0.45",
     );
   }
   if (card) {
-    timeline.to(card, { y: 0, autoAlpha: 1, duration: 1, ease: "power3.out" }, "-=0.55");
+    timeline.fromTo(card, { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, ease: "power3.out" }, "-=0.55");
   }
 }
 
@@ -214,19 +209,23 @@ function setupSimpleReveals() {
     const targets = document.querySelectorAll(selector);
     if (!targets.length) return;
 
-    gsap.from(targets, {
-      y: 36,
-      autoAlpha: 0,
-      duration: 1,
-      ease: "power3.out",
-      stagger: 0.08,
-      scrollTrigger: {
-        trigger,
-        start,
-        toggleActions: "play none none none",
-        once: true,
+    gsap.fromTo(
+      targets,
+      { y: 36, autoAlpha: 0 },
+      {
+        y: 0,
+        autoAlpha: 1,
+        duration: 1,
+        ease: "power3.out",
+        stagger: 0.08,
+        scrollTrigger: {
+          trigger,
+          start,
+          toggleActions: "restart none restart none",
+          invalidateOnRefresh: true,
+        },
       },
-    });
+    );
   };
 
   reveal(".trusted-brands-inner", ".trusted-brands");
