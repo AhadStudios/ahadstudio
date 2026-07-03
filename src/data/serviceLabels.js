@@ -1,0 +1,40 @@
+export const showcasePortrait = "/personal.png";
+
+export const showcasePeople = [
+  {
+    id: "person-center",
+    src: showcasePortrait,
+    x: 44,
+    y: 100,
+    xPercent: -40,
+    yPercent: -100,
+    size: "center-large",
+    rotation: 0,
+    scale: 1,
+    zIndex: 2,
+  },
+  {
+    id: "person-left",
+    src: "https://images.unsplash.com/photo-1557865811-db6b0c0a76a5?auto=format&fit=crop&w=800&h=1200&q=85&fm=webp",
+    x: 24,
+    y: 90,
+    xPercent: -50,
+    yPercent: -100,
+    size: "small",
+    rotation: -5,
+    scale: 0.94,
+    zIndex: 1,
+  },
+  { 
+    id: "person-lower",
+    src: "/sticker.png",
+    x: 56,
+    y: 24,
+    xPercent: -50,
+    yPercent: -50,
+    size: "small-lower",
+    rotation: -5,
+    scale: 0.9,
+    zIndex: 3,
+  },
+];

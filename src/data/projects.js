@@ -1,0 +1,75 @@
+export const projects = [
+  {
+    id: "01",
+    title: "ORBIT",
+    categories: ["BRANDING", "WEB DESIGN", "DEVELOPMENT"],
+    description:
+      "A digital platform for a new era of space exploration. We designed an immersive experience that takes users beyond the stars.",
+    year: "2024",
+    role: "DESIGN & DEV",
+    award: "AWWWARDS HM",
+    image:
+      "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1600&h=1000&q=80",
+    imageAlt: "Orbit website screenshot",
+    cardTitle: "EXPLORE BEYOND",
+    cardSubtitle: "A NEW FRONTIER OF POSSIBILITY",
+    cardAction: "explore",
+    cardActionLabel: "EXPLORE PROJECT",
+    href: "#orbit",
+  },
+  {
+    id: "02",
+    title: "ECHO",
+    categories: ["PRODUCT DESIGN", "DEVELOPMENT", "MOTION"],
+    description:
+      "An audio platform that visualizes sound in real time. We built a reactive interface where every frequency becomes light and motion.",
+    year: "2024",
+    role: "DESIGN & DEV",
+    award: "FWA SOTD",
+    image:
+      "https://images.unsplash.com/photo-1614149162883-eca63db78a79?auto=format&fit=crop&w=1600&h=1000&q=80",
+    imageAlt: "Echo audio platform website screenshot",
+    cardTitle: "ECHO",
+    cardTitleSpaced: true,
+    cardSubtitle: "",
+    cardAction: "play",
+    href: "#echo",
+  },
+  {
+    id: "03",
+    title: "LUMINA",
+    categories: ["BRANDING", "WEB DESIGN", "E-COMMERCE"],
+    description:
+      "A premium lighting brand reimagined for the digital age. Warm tones, soft shadows, and a shopping experience as refined as the products.",
+    year: "2023",
+    role: "BRAND & WEB",
+    award: "CSSDA WOTD",
+    image:
+      "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=1600&h=1000&q=80",
+    imageAlt: "Lumina lighting website screenshot",
+    cardTitle: "LIGHT THAT UNDERSTANDS YOU",
+    cardSubtitle: "DESIGNED FOR MODERN LIVING",
+    cardAction: "explore",
+    cardActionLabel: "EXPLORE PROJECT",
+    href: "#lumina",
+  },
+  {
+    id: "04",
+    title: "NEXUS",
+    categories: ["WEB DESIGN", "DEVELOPMENT", "3D"],
+    description:
+      "A fintech platform bridging traditional finance and crypto. Clean UI, bold gradients, and 3D elements that communicate trust and innovation.",
+    year: "2024",
+    role: "DESIGN & DEV",
+    award: "AWWWARDS HM",
+    image:
+      "https://images.unsplash.com/photo-1639765481130-a6bdf4cbff3e?auto=format&fit=crop&w=1600&h=1000&q=80",
+    imageAlt: "Nexus fintech website screenshot",
+    cardTitle: "The Future of Digital Finance.",
+    cardSubtitle: "SEAMLESS. SECURE. SCALABLE.",
+    cardAction: "view",
+    cardActionLabel: "VIEW PROJECT",
+    cardActionIcon: "chart",
+    href: "#nexus",
+  },
+];

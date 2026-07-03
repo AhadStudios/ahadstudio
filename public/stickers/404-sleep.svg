@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 88" role="img" aria-label="404 sleep not found">
+  <rect x="4" y="4" width="192" height="80" rx="16" fill="#d8ecff" stroke="#1a1a1a" stroke-width="3"/>
+  <text x="100" y="36" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-size="18" font-weight="900" fill="#1a1a1a">404</text>
+  <text x="100" y="62" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#1a1a1a">sleep not found</text>
+</svg>
