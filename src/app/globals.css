@@ -5365,6 +5365,8 @@ video {
   grid-template-columns: 252px 1fr 232px;
   grid-template-rows: 188px 188px auto;
   gap: 10px;
+  perspective: 1100px;
+  transform-style: preserve-3d;
 }
 
 .home-trusted-grid::before {
@@ -5374,15 +5376,15 @@ video {
   pointer-events: none;
   z-index: 0;
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.4s ease;
   background: radial-gradient(
-    560px circle at var(--mx) var(--my),
-    rgba(255, 255, 255, 0.045),
-    transparent 42%
+    520px circle at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.055),
+    transparent 44%
   );
 }
 
-.home-trusted-grid:hover::before {
+.home-trusted.is-anim-ready .home-trusted-grid::before {
   opacity: 1;
 }
 
@@ -5404,17 +5406,35 @@ video {
   z-index: 1;
   opacity: 1;
   visibility: visible;
+  transform-style: preserve-3d;
   will-change: transform, opacity, filter;
   transition:
-    transform 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    border-color 0.28s ease,
-    background 0.28s ease;
+    transform 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 0.32s ease,
+    background 0.32s ease,
+    box-shadow 0.32s ease;
+}
+
+.trusted-card-scan {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.16) 50%,
+    transparent 62%
+  );
+  mix-blend-mode: screen;
 }
 
 .home-trusted.is-anim-ready .trusted-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.17);
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.42);
 }
 
 .home-trusted.is-anim-ready .trusted-card:hover .trusted-arrow {
@@ -5423,7 +5443,7 @@ video {
 }
 
 .home-trusted.is-anim-ready .trusted-card-image:hover .trusted-card-img {
-  transform: scale(1.04);
+  transform: scale(1.045);
 }
 
 /* Image cards */
@@ -5511,9 +5531,13 @@ video {
   letter-spacing: -0.015em;
   margin: 0;
   flex: 1;
-  display: flex;
-  align-items: center;
+  display: block;
   padding: 12px 0;
+}
+
+.trusted-quote-chunk {
+  display: inline;
+  will-change: transform, opacity, filter;
 }
 
 .trusted-quote-author {
@@ -5637,6 +5661,11 @@ video {
 
   .home-trusted-grid::before {
     display: none;
+  }
+
+  .home-trusted.is-anim-ready .trusted-card:hover {
+    transform: none;
+    box-shadow: none;
   }
 
   .trusted-card--img1,

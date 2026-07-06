@@ -7,34 +7,51 @@ import { useIntroExperience } from "@/components/intro/IntroExperienceProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CARD_BASE = {
-  opacity: 0,
-  y: 38,
-  scale: 0.97,
-  filter: "blur(10px)",
-};
+const QUOTE_CHUNKS = [
+  "AhadStudios\u2019 design and development work",
+  " is sharp, fast,",
+  " and built with real attention to detail.",
+];
 
 function getCardInitialState(card) {
+  const base = {
+    opacity: 0,
+    y: 42,
+    scale: 0.965,
+    filter: "blur(12px)",
+    transformOrigin: "center center",
+  };
+
+  if (card.classList.contains("trusted-card--quote")) {
+    return { ...base, y: 55, scale: 0.96 };
+  }
   if (
     card.classList.contains("trusted-card--m1") ||
     card.classList.contains("trusted-card--m2")
   ) {
-    return { ...CARD_BASE, x: 28, rotation: 1.5 };
+    return { ...base, x: 70, y: 42, rotation: 2 };
+  }
+  if (card.classList.contains("trusted-card--wide")) {
+    return { ...base, y: 65, scale: 0.97 };
   }
   if (
     card.classList.contains("trusted-card--img1") ||
     card.classList.contains("trusted-card--img2") ||
     card.classList.contains("trusted-card--stat")
   ) {
-    return { ...CARD_BASE, x: -28, rotation: -1.5 };
+    return { ...base, x: -70, y: 42, rotation: -2 };
   }
-  return { ...CARD_BASE };
+  return base;
 }
 
 function setFinalStats(m1El, m2El, topEl) {
   if (m1El) m1El.textContent = "3x Faster";
   if (m2El) m2El.textContent = "+280%";
   if (topEl) topEl.textContent = "Top 1%";
+}
+
+function CardScan() {
+  return <span className="trusted-card-scan" aria-hidden="true" />;
 }
 
 function ArrowBtn() {
@@ -85,6 +102,57 @@ export default function HomeTrustedSection() {
     grid.style.setProperty("--my", "50%");
   }, []);
 
+  const handleCardEnter = useCallback((event) => {
+    const section = sectionRef.current;
+    const card = event.currentTarget;
+    if (
+      !section?.classList.contains("is-anim-ready") ||
+      window.matchMedia("(max-width: 900px)").matches
+    ) {
+      return;
+    }
+
+    gsap.to(card, {
+      y: -6,
+      duration: 0.32,
+      ease: "power3.out",
+    });
+  }, []);
+
+  const handleCardMove = useCallback((event) => {
+    const section = sectionRef.current;
+    const card = event.currentTarget;
+    if (
+      !section?.classList.contains("is-anim-ready") ||
+      window.matchMedia("(max-width: 900px)").matches
+    ) {
+      return;
+    }
+
+    const rect = card.getBoundingClientRect();
+    const px = (event.clientX - rect.left) / rect.width - 0.5;
+    const py = (event.clientY - rect.top) / rect.height - 0.5;
+
+    gsap.to(card, {
+      rotationY: px * 2,
+      rotationX: -py * 2,
+      duration: 0.45,
+      ease: "power2.out",
+      transformPerspective: 900,
+    });
+  }, []);
+
+  const handleCardLeave = useCallback((event) => {
+    const card = event.currentTarget;
+    gsap.to(card, {
+      y: 0,
+      rotationY: 0,
+      rotationX: 0,
+      duration: 0.5,
+      ease: "power3.out",
+    });
+  }, []);
+
   useLayoutEffect(() => {
     if (!introComplete || !sectionRef.current) return undefined;
 
@@ -95,23 +163,20 @@ export default function HomeTrustedSection() {
     const title = section.querySelector(".home-trusted-title");
     const cta = section.querySelector(".home-trusted-cta");
     const cards = gsap.utils.toArray(section.querySelectorAll(".trusted-card"));
+    const scans = gsap.utils.toArray(section.querySelectorAll(".trusted-card-scan"));
     const imageCards = gsap.utils.toArray(section.querySelectorAll(".trusted-card-image"));
     const images = gsap.utils.toArray(
       section.querySelectorAll(".trusted-card-image .trusted-card-img"),
     );
 
-    const quoteParts = gsap.utils.toArray(
-      section.querySelectorAll(
-        ".trusted-quote-mark, .trusted-quote-text, .trusted-quote-author, .trusted-card--quote .trusted-card-footer",
-      ),
-    );
+    const quoteMark = section.querySelector(".trusted-quote-mark");
+    const quoteChunks = gsap.utils.toArray(section.querySelectorAll(".trusted-quote-chunk"));
+    const quoteAuthor = section.querySelector(".trusted-quote-author");
+    const quoteBrand = section.querySelector(".trusted-card--quote .trusted-brand-label");
+    const quoteArrow = section.querySelector(".trusted-card--quote .trusted-arrow");
 
-    const wideParts = gsap.utils.toArray(
-      section.querySelectorAll(
-        ".trusted-card--wide .trusted-wide-text, .trusted-card--wide .trusted-card-footer",
-      ),
-    );
-
+    const wideText = section.querySelector(".trusted-wide-text");
+    const wideFooter = section.querySelector(".trusted-card--wide .trusted-card-footer");
     const statExtras = gsap.utils.toArray(
       section.querySelectorAll(
         ".trusted-card--stat .trusted-stat-mid, .trusted-card--stat .trusted-stat-sub",
@@ -124,32 +189,63 @@ export default function HomeTrustedSection() {
 
     if (!title || !cards.length) return undefined;
 
-    gsap.set(title, { opacity: 0, y: 28, filter: "blur(8px)" });
-    if (cta) gsap.set(cta, { opacity: 0, y: 14, scale: 0.96 });
+    gsap.set(title, {
+      opacity: 0,
+      y: 38,
+      filter: "blur(12px)",
+      letterSpacing: "0.02em",
+    });
+
+    if (cta) {
+      gsap.set(cta, {
+        opacity: 0,
+        y: 18,
+        scale: 0.92,
+        filter: "blur(8px)",
+      });
+    }
 
     cards.forEach((card) => {
       gsap.set(card, getCardInitialState(card));
+    });
+
+    scans.forEach((scan) => {
+      gsap.set(scan, { x: "-110%", opacity: 0 });
     });
 
     imageCards.forEach((card) => {
       const isCircle = card.classList.contains("trusted-card--img2");
       gsap.set(card, {
         clipPath: isCircle
-          ? "inset(18% 18% 18% 18% round 999px)"
-          : "inset(18% 18% 18% 18% round 28px)",
+          ? "inset(16% 16% 16% 16% round 999px)"
+          : "inset(16% 16% 16% 16% round 28px)",
       });
     });
 
     if (images.length) {
       gsap.set(images, {
-        scale: 1.08,
-        filter: "blur(6px) saturate(1.2)",
+        scale: 1.1,
+        yPercent: -6,
+        filter: "blur(6px) saturate(1.25)",
       });
     }
 
+    const quoteParts = [quoteMark, ...quoteChunks, quoteAuthor, quoteBrand, quoteArrow].filter(
+      Boolean,
+    );
+    const wideParts = [wideText, wideFooter].filter(Boolean);
     const innerReveal = [...quoteParts, ...wideParts, ...statExtras];
+
     if (innerReveal.length) {
-      gsap.set(innerReveal, { opacity: 0, y: 18, filter: "blur(6px)" });
+      gsap.set(innerReveal, { opacity: 0, y: 16, filter: "blur(8px)" });
+    }
+
+    if (quoteMark) {
+      gsap.set(quoteMark, { opacity: 0, scale: 0.88, y: 10, filter: "blur(6px)" });
+    }
+
+    if (quoteArrow) {
+      gsap.set(quoteArrow, { opacity: 0, scale: 0.82, y: 8 });
     }
 
     if (m1Value) m1Value.textContent = "0x Faster";
@@ -160,6 +256,7 @@ export default function HomeTrustedSection() {
       title,
       cta,
       ...cards,
+      ...scans,
       ...imageCards,
       ...images,
       ...innerReveal,
@@ -182,13 +279,13 @@ export default function HomeTrustedSection() {
           scrollTrigger: {
             trigger: section,
             scroller,
-            start: "top 88%",
-            end: "top 18%",
-            scrub: 0.75,
+            start: "top 82%",
+            end: "top 12%",
+            scrub: 1.25,
             markers: false,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
-              if (self.progress >= 0.85) {
+              if (self.progress >= 0.88) {
                 section.classList.add("is-anim-ready");
                 setFinalStats(m1Value, m2Value, topStat);
               } else {
@@ -204,8 +301,9 @@ export default function HomeTrustedSection() {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
+            letterSpacing: "-0.025em",
             ease: "power3.out",
-            duration: 0.12,
+            duration: 0.2,
           },
           0,
         );
@@ -217,10 +315,11 @@ export default function HomeTrustedSection() {
               opacity: 1,
               y: 0,
               scale: 1,
+              filter: "blur(0px)",
               ease: "power3.out",
-              duration: 0.1,
+              duration: 0.16,
             },
-            0.08,
+            0.1,
           );
         }
 
@@ -233,12 +332,40 @@ export default function HomeTrustedSection() {
             rotation: 0,
             scale: 1,
             filter: "blur(0px)",
-            stagger: 0.06,
-            ease: "power3.out",
-            duration: 0.55,
+            stagger: 0.085,
+            ease: "expo.out",
+            duration: 0.85,
           },
-          0.12,
+          0.18,
         );
+
+        cards.forEach((card, index) => {
+          const scan = card.querySelector(".trusted-card-scan");
+          if (!scan) return;
+
+          const at = 0.18 + index * 0.085;
+
+          tl.to(
+            scan,
+            {
+              x: "110%",
+              opacity: 0.85,
+              ease: "power2.inOut",
+              duration: 0.55,
+            },
+            at,
+          );
+
+          tl.to(
+            scan,
+            {
+              opacity: 0,
+              duration: 0.18,
+              ease: "power2.out",
+            },
+            at + 0.42,
+          );
+        });
 
         if (imageCards.length) {
           tl.to(
@@ -249,10 +376,10 @@ export default function HomeTrustedSection() {
                   ? "inset(0% 0% 0% 0% round 999px)"
                   : "inset(0% 0% 0% 0% round 28px)",
               ease: "power3.out",
-              duration: 0.35,
-              stagger: 0.04,
+              duration: 0.55,
+              stagger: 0.06,
             },
-            0.2,
+            0.3,
           );
         }
 
@@ -261,27 +388,125 @@ export default function HomeTrustedSection() {
             images,
             {
               scale: 1,
-              filter: "blur(0px) saturate(1.05)",
+              yPercent: 4,
+              filter: "blur(0px) saturate(1.08)",
               ease: "power3.out",
-              duration: 0.35,
-              stagger: 0.04,
+              duration: 0.55,
+              stagger: 0.06,
             },
-            0.2,
+            0.32,
+          );
+
+          tl.to(
+            images,
+            {
+              yPercent: 6,
+              ease: "none",
+              duration: 0.35,
+            },
+            0.62,
           );
         }
 
-        if (innerReveal.length) {
+        if (quoteMark) {
           tl.to(
-            innerReveal,
+            quoteMark,
+            {
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              filter: "blur(0px)",
+              ease: "power3.out",
+              duration: 0.22,
+            },
+            0.46,
+          );
+        }
+
+        if (quoteChunks.length) {
+          tl.to(
+            quoteChunks,
             {
               opacity: 1,
               y: 0,
               filter: "blur(0px)",
-              stagger: 0.03,
+              stagger: 0.06,
+              ease: "power3.out",
+              duration: 0.38,
+            },
+            0.5,
+          );
+        }
+
+        if (quoteAuthor) {
+          tl.to(
+            quoteAuthor,
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              ease: "power3.out",
+              duration: 0.24,
+            },
+            0.58,
+          );
+        }
+
+        if (quoteBrand) {
+          tl.to(
+            quoteBrand,
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              ease: "power3.out",
+              duration: 0.2,
+            },
+            0.62,
+          );
+        }
+
+        if (quoteArrow) {
+          tl.to(
+            quoteArrow,
+            {
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              ease: "back.out(1.4)",
+              duration: 0.22,
+            },
+            0.66,
+          );
+        }
+
+        if (wideParts.length) {
+          tl.to(
+            wideParts,
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              stagger: 0.05,
               ease: "power3.out",
               duration: 0.3,
             },
-            0.28,
+            0.52,
+          );
+        }
+
+        if (statExtras.length) {
+          tl.to(
+            statExtras,
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              stagger: 0.05,
+              ease: "power3.out",
+              duration: 0.28,
+            },
+            0.54,
           );
         }
 
@@ -290,7 +515,7 @@ export default function HomeTrustedSection() {
             m1Counter,
             {
               v: 3,
-              duration: 0.3,
+              duration: 0.34,
               ease: "power2.out",
               onUpdate: () => {
                 m1Value.textContent = `${Math.round(m1Counter.v)}x Faster`;
@@ -299,7 +524,7 @@ export default function HomeTrustedSection() {
                 m1Value.textContent = "3x Faster";
               },
             },
-            0.35,
+            0.58,
           );
         }
 
@@ -308,7 +533,7 @@ export default function HomeTrustedSection() {
             m2Counter,
             {
               v: 280,
-              duration: 0.3,
+              duration: 0.34,
               ease: "power2.out",
               onUpdate: () => {
                 m2Value.textContent = `+${Math.round(m2Counter.v)}%`;
@@ -317,7 +542,7 @@ export default function HomeTrustedSection() {
                 m2Value.textContent = "+280%";
               },
             },
-            0.35,
+            0.6,
           );
         }
 
@@ -326,7 +551,7 @@ export default function HomeTrustedSection() {
             topCounter,
             {
               v: 1,
-              duration: 0.25,
+              duration: 0.3,
               ease: "power2.out",
               onUpdate: () => {
                 topStat.textContent = `Top ${Math.round(topCounter.v)}%`;
@@ -335,7 +560,7 @@ export default function HomeTrustedSection() {
                 topStat.textContent = "Top 1%";
               },
             },
-            0.35,
+            0.58,
           );
         }
       }, section);
@@ -351,6 +576,9 @@ export default function HomeTrustedSection() {
       section.classList.remove("is-anim-ready");
       ctx?.revert();
       gsap.set(animatedTargets, { clearProps: "all" });
+      cards.forEach((card) => {
+        gsap.set(card, { rotationX: 0, rotationY: 0 });
+      });
       setFinalStats(m1Value, m2Value, topStat);
     };
   }, [introComplete]);
@@ -375,7 +603,13 @@ export default function HomeTrustedSection() {
           onMouseMove={handleGridMove}
           onMouseLeave={handleGridLeave}
         >
-          <div className="trusted-card trusted-card-image trusted-card--img1">
+          <div
+            className="trusted-card trusted-card-image trusted-card--img1"
+            onMouseEnter={handleCardEnter}
+            onMouseMove={handleCardMove}
+            onMouseLeave={handleCardLeave}
+          >
+            <CardScan />
             <img
               src="/glitch.png"
               alt="AhadStudios project visual"
@@ -384,7 +618,13 @@ export default function HomeTrustedSection() {
             />
           </div>
 
-          <div className="trusted-card trusted-card-image trusted-card--img2">
+          <div
+            className="trusted-card trusted-card-image trusted-card--img2"
+            onMouseEnter={handleCardEnter}
+            onMouseMove={handleCardMove}
+            onMouseLeave={handleCardLeave}
+          >
+            <CardScan />
             <img
               src="/glitch.png"
               alt="AhadStudios visual"
@@ -393,7 +633,13 @@ export default function HomeTrustedSection() {
             />
           </div>
 
-          <div className="trusted-card trusted-card--stat">
+          <div
+            className="trusted-card trusted-card--stat"
+            onMouseEnter={handleCardEnter}
+            onMouseMove={handleCardMove}
+            onMouseLeave={handleCardLeave}
+          >
+            <CardScan />
             <span className="trusted-stat-big" ref={topStatRef}>
               Top 1%
             </span>
@@ -405,11 +651,20 @@ export default function HomeTrustedSection() {
             <span className="trusted-stat-sub">5.0 Rated On Trustpilot</span>
           </div>
 
-          <div className="trusted-card trusted-card-large trusted-card--quote">
+          <div
+            className="trusted-card trusted-card-large trusted-card--quote"
+            onMouseEnter={handleCardEnter}
+            onMouseMove={handleCardMove}
+            onMouseLeave={handleCardLeave}
+          >
+            <CardScan />
             <span className="trusted-quote-mark">&ldquo;</span>
             <p className="trusted-quote-text">
-              AhadStudios&rsquo; design and development work is sharp, fast,
-              and built with real attention to detail.
+              {QUOTE_CHUNKS.map((chunk) => (
+                <span key={chunk} className="trusted-quote-chunk">
+                  {chunk}
+                </span>
+              ))}
             </p>
             <div className="trusted-quote-author">
               <span className="trusted-author-name">Alex Chen</span>
@@ -421,7 +676,13 @@ export default function HomeTrustedSection() {
             </div>
           </div>
 
-          <div className="trusted-card trusted-card-metric trusted-card--m1">
+          <div
+            className="trusted-card trusted-card-metric trusted-card--m1"
+            onMouseEnter={handleCardEnter}
+            onMouseMove={handleCardMove}
+            onMouseLeave={handleCardLeave}
+          >
+            <CardScan />
             <div>
               <span className="trusted-metric-value" ref={m1ValueRef}>
                 3x Faster
@@ -434,7 +695,13 @@ export default function HomeTrustedSection() {
             </div>
           </div>
 
-          <div className="trusted-card trusted-card-metric trusted-card--m2">
+          <div
+            className="trusted-card trusted-card-metric trusted-card--m2"
+            onMouseEnter={handleCardEnter}
+            onMouseMove={handleCardMove}
+            onMouseLeave={handleCardLeave}
+          >
+            <CardScan />
             <div>
               <span className="trusted-metric-value" ref={m2ValueRef}>
                 +280%
@@ -449,7 +716,13 @@ export default function HomeTrustedSection() {
             </div>
           </div>
 
-          <div className="trusted-card trusted-card--wide">
+          <div
+            className="trusted-card trusted-card--wide"
+            onMouseEnter={handleCardEnter}
+            onMouseMove={handleCardMove}
+            onMouseLeave={handleCardLeave}
+          >
+            <CardScan />
             <p className="trusted-wide-text">
               We helped Meridian rebrand and launch their new platform,
               resulting in 12M+ users within the first quarter.
