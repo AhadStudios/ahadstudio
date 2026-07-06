@@ -5192,4 +5192,104 @@ video {
 .navbar-pill-slot--end .page-dropdown-menu {
   right: 0;
 }
+
+/* ================================================
+   Home Glitch Reveal Section
+   ================================================ */
+
+.home-glitch-reveal {
+  position: relative;
+  width: 100%;
+  /* Enough scroll height for the reveal + parallax to breathe */
+  min-height: 160vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* prevent any horizontal bleed */
+  /* Pointer events only where content is */
+  pointer-events: none;
+}
+
+.home-glitch-pin {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Capsule frame — clip-path is animated by GSAP */
+.home-glitch-frame {
+  position: relative;
+  width: clamp(76vw, 85vw, 88vw);
+  height: clamp(320px, 40vh, 430px);
+  border-radius: 999px;
+  overflow: hidden;
+  will-change: transform, clip-path, filter;
+  /* shadow/glow for depth */
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 32px 80px rgba(0, 0, 0, 0.55),
+    0 8px 24px rgba(0, 0, 0, 0.35);
+  /* GSAP sets clip-path initially */
+  clip-path: inset(46% 18% 46% 18% round 999px);
+  opacity: 0;
+}
+
+/* Main image */
+.home-glitch-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  /* Taller than frame so parallax has room */
+  height: 120%;
+  top: -10%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* RGB chromatic aberration layers */
+.home-glitch-rgb-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 120%;
+  top: -10%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0; /* controlled by GSAP */
+  will-change: transform, opacity;
+}
+
+.home-glitch-rgb-layer--cyan {
+  mix-blend-mode: screen;
+  filter: hue-rotate(120deg) saturate(4) brightness(1.6);
+}
+
+.home-glitch-rgb-layer--red {
+  mix-blend-mode: screen;
+  filter: hue-rotate(-120deg) saturate(4) brightness(1.6);
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .home-glitch-reveal {
+    min-height: 140vh;
+  }
+
+  .home-glitch-frame {
+    width: 92vw;
+    height: clamp(240px, 38vh, 300px);
+  }
+}
  

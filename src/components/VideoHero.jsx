@@ -5,6 +5,7 @@ import { gsap, ScrollTrigger, initializeGsapFoundation } from "@/animations/help
 import { useIntroExperience } from "@/components/intro/IntroExperienceProvider";
 import { HERO_STORY_STEPS } from "@/data/heroStorySteps";
 import HeroScrollIndicator from "@/components/HeroScrollIndicator";
+import HomeGlitchReveal from "@/components/HomeGlitchReveal";
 
 const STORY_STEP = 1;
 const STORY_FADE = 0.2;
@@ -30,14 +31,16 @@ const EXIT_STEP = {
   filter: "blur(8px)",
 };
 
-function buildHeroStoryTimeline(steps, root, pin, scroller, onProgress) {
+function buildHeroStoryTimeline(steps, root, pin, scroller, onProgress, outroSteps = 1) {
+  const totalSteps = steps.length + outroSteps;
+
   const timeline = gsap.timeline({
     defaults: { ease: "none" },
     scrollTrigger: {
       trigger: root,
       scroller: scroller || undefined,
       start: "top top",
-      end: () => `+=${Math.round(window.innerHeight * steps.length)}`,
+      end: () => `+=${Math.round(window.innerHeight * totalSteps)}`,
       pin,
       pinSpacing: true,
       pinType: scroller ? "transform" : "fixed",
@@ -174,9 +177,33 @@ export default function VideoHero() {
           });
         }
 
-        buildHeroStoryTimeline(steps, root, pin, scroller, (progress) => {
+        const storyTl = buildHeroStoryTimeline(steps, root, pin, scroller, (progress) => {
           setShowScrollHint(progress < 0.02);
-        });
+        }, 1);
+
+        // Outro: fade video + text out during the extra pinned step
+        // Last story step (welcome) fades in at position (steps.length-1)+STORY_FADE
+        // Outro starts after that and runs to the end of the extended pin
+        const outroStart = (steps.length - 1) * STORY_STEP + STORY_FADE + 0.2;
+        const outroDuration = 0.7;
+
+        const videoSlot = pin.querySelector("#hero-video-slot");
+        const story = pin.querySelector(".video-hero-story");
+
+        if (videoSlot) {
+          storyTl.to(
+            videoSlot,
+            { autoAlpha: 0, scale: 1.06, filter: "blur(18px)", y: -60, duration: outroDuration },
+            outroStart,
+          );
+        }
+        if (story) {
+          storyTl.to(
+            story,
+            { autoAlpha: 0, y: -40, filter: "blur(8px)", duration: outroDuration * 0.8 },
+            outroStart,
+          );
+        }
       }, root);
 
       const refresh = () => ScrollTrigger.refresh();
@@ -230,6 +257,8 @@ export default function VideoHero() {
 
         <HeroScrollIndicator visible={showScrollHint && introComplete} />
       </div>
+
+      <HomeGlitchReveal />
     </section>
   );
 }
