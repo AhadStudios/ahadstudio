@@ -8,6 +8,7 @@ import HeroScrollIndicator from "@/components/HeroScrollIndicator";
 import HomeGlitchReveal from "@/components/HomeGlitchReveal";
 import HomeTrustedSection from "@/components/HomeTrustedSection";
 import HomeAboutBrief from "@/components/HomeAboutBrief";
+import HomeFAQ from "@/components/HomeFAQ";
 
 const STORY_STEP = 1;
 const STORY_FADE = 0.2;
@@ -263,6 +264,7 @@ export default function VideoHero() {
       <HomeGlitchReveal />
       <HomeTrustedSection />
       <HomeAboutBrief />
+      <HomeFAQ />
     </section>
   );
 }
