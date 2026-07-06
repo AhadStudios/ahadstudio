@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { flushSync } from "react-dom";
 import { gsap } from "@/animations/helpers";
 import { useIntroExperience } from "@/components/intro/IntroExperienceProvider";
 
@@ -124,8 +123,12 @@ export default function CinematicIntro() {
     const showLine = async (lineKey) => {
       if (!isActive()) return;
 
-      flushSync(() => {
-        setActiveLine(lineKey);
+      // Queue as a microtask so React is not mid-render when setState fires
+      await new Promise((resolve) => {
+        queueMicrotask(() => {
+          setActiveLine(lineKey);
+          resolve();
+        });
       });
 
       const el = lineRef.current;

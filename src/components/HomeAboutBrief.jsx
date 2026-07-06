@@ -32,6 +32,10 @@ export default function HomeAboutBrief() {
       return;
     }
 
+    // Declare outside ctx so the cleanup closure can access it without
+    // referencing ctx before it is fully initialized
+    let refreshId;
+
     const ctx = gsap.context(() => {
       // Hide words via GSAP (text stays visible if JS ever fails — no CSS opacity:0)
       gsap.set(words, { opacity: 0, y: 32, filter: "blur(12px)", scale: 0.96 });
@@ -94,21 +98,18 @@ export default function HomeAboutBrief() {
           "-=0.5",
         );
       }
-
-      // Give Lenis + layout time to settle before computing scroll positions
-      const refreshId = window.setTimeout(() => {
-        ScrollTrigger.refresh();
-        console.log("[HomeAboutBrief] ScrollTrigger refreshed");
-      }, 400);
-
-      console.log("[HomeAboutBrief] ScrollTrigger setup complete");
-
-      // Store the timeout so we can cancel it on cleanup
-      ctx._cleanupTimeout = refreshId;
     }, section);
 
+    // Give Lenis + layout time to settle before computing scroll positions
+    refreshId = window.setTimeout(() => {
+      ScrollTrigger.refresh();
+      console.log("[HomeAboutBrief] ScrollTrigger refreshed");
+    }, 400);
+
+    console.log("[HomeAboutBrief] ScrollTrigger setup complete");
+
     return () => {
-      if (ctx._cleanupTimeout) window.clearTimeout(ctx._cleanupTimeout);
+      window.clearTimeout(refreshId);
       ctx.revert();
     };
   }, []); // Run once after mount
