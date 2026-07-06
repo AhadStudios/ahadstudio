@@ -119,7 +119,7 @@ export default function Navbar() {
     <>
       <header className="navbar navbar--hero" ref={heroRef} aria-label="Site navigation">
         <a href="/" className="navbar-logo">
-          CREATIVECUE<span className="navbar-logo-mark">®</span>
+          AHADSTUDIOS<span className="navbar-logo-mark">®</span>
         </a>
 
         <div className="navbar-actions">
@@ -147,7 +147,7 @@ export default function Navbar() {
           </div>
 
           <a href="/" className="navbar-logo navbar-logo--pill">
-            CREATIVECUE<span className="navbar-logo-mark">®</span>
+            AHADSTUDIOS<span className="navbar-logo-mark">®</span>
           </a>
 
           <div className="navbar-pill-slot navbar-pill-slot--end">

@@ -16,7 +16,7 @@ export default function AgencyIntro() {
           </div>
           <p className="agency-intro-text">
             Over 12 years grinding alongside founders &amp; agencies with a chip
-            on their shoulder and a story that needs telling. CREATIVECUE is the
+            on their shoulder and a story that needs telling. AHADSTUDIOS is the
             design partner teams turn to when speed &amp; quality matter most.
           </p>
         </div>

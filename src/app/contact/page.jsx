@@ -1,7 +1,7 @@
 import ContactPage from "@/components/contact/ContactPage";
 
 export const metadata = {
-  title: "Contact — CreativeCue",
+  title: "Contact — AhadStudios",
   description: "Book a call and let's build something great together.",
 };
 

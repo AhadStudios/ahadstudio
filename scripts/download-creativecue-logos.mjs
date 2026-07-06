@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const outDir = path.join(__dirname, "..", "public", "brand-logos");
-const baseUrl = "https://creativecue.co/images/brands";
+const baseUrl = "https://ahadstudios.com/images/brands";
 
 const brandAssets = [
   { name: "Wander", slug: "wander", file: "wander.svg" },

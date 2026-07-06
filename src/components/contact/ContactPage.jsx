@@ -318,8 +318,8 @@ export default function ContactPage() {
 
           <p className="contact-page-email-fallback" data-contact-reveal>
             Prefer email?{" "}
-            <a href="mailto:hello@creativecue.com" className="contact-page-email-link">
-              hello@creativecue.com
+            <a href="mailto:hello@ahadstudios.com" className="contact-page-email-link">
+              hello@ahadstudios.com
             </a>
           </p>
         </div>

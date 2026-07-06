@@ -68,7 +68,7 @@ export default function WorkClosingCTA() {
         <div className="work-closing-cta-grid">
           <div className="work-closing-cta-copy">
             <p className="work-closing-cta-eyebrow" data-work-cta-reveal>
-              Build with CreativeCue
+              Build with AhadStudios
             </p>
 
             <h2

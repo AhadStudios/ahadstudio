@@ -25,7 +25,7 @@ const SOCIAL_LINKS = [
   { label: "GitHub", href: "https://github.com" },
   { label: "LinkedIn", href: "https://linkedin.com" },
   { label: "Instagram", href: "https://instagram.com" },
-  { label: "Email", href: "mailto:hello@creativecue.com" },
+  { label: "Email", href: "mailto:hello@ahadstudios.com" },
 ];
 
 function scrollToTarget(target) {

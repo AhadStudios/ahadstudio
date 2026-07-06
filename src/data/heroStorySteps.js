@@ -21,6 +21,6 @@ export const HERO_STORY_STEPS = [
   },
   {
     id: "welcome",
-    lines: ["Welcome To", "CreativeCue®"],
+    lines: ["Welcome To", "AhadStudios®"],
   },
 ];
