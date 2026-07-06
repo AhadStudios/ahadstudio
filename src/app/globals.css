@@ -5200,8 +5200,9 @@ video {
 .home-glitch-reveal {
   position: relative;
   width: 100%;
-  /* Enough scroll height for the reveal + parallax to breathe */
-  min-height: 160vh;
+  /* Pin is 100vh; small extra scroll room for reveal + ~100px gap to next section */
+  min-height: calc(100vh + 100px);
+  padding-bottom: 0;
   background: #000;
   display: flex;
   align-items: center;
@@ -5284,7 +5285,7 @@ video {
 /* Mobile */
 @media (max-width: 640px) {
   .home-glitch-reveal {
-    min-height: 140vh;
+    min-height: calc(100vh + 80px);
   }
 
   .home-glitch-frame {
@@ -5298,7 +5299,7 @@ video {
    ================================================ */
 .home-trusted {
   background: #000;
-  padding: 0 24px 140px;
+  padding: 32px 24px 140px;
   pointer-events: all;
 }
 
@@ -5581,7 +5582,7 @@ video {
 
 @media (max-width: 640px) {
   .home-trusted {
-    padding: 0 16px 100px;
+    padding: 24px 16px 100px;
   }
 
   .home-trusted-header {
