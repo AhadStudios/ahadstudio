@@ -123,9 +123,9 @@ export default function Navbar() {
         </a>
 
         <div className="navbar-actions">
-          <a href="#work" className="view-works">
+          {/* <a href="#work" className="view-works">
             View Works
-          </a>
+          </a> */}
           <Hamburger
             onClick={handleMenuClick}
             aria-expanded={isMenuOpen}
