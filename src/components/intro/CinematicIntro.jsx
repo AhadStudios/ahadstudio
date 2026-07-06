@@ -52,10 +52,6 @@ export default function CinematicIntro() {
   const { introComplete, completeIntro } = useIntroExperience();
 
   useEffect(() => {
-    console.log("CinematicIntro mounted");
-  }, []);
-
-  useEffect(() => {
     completeIntroRef.current = completeIntro;
   }, [completeIntro]);
 
@@ -87,7 +83,6 @@ export default function CinematicIntro() {
       if (!isActive() || finishedRef.current) return;
       finishedRef.current = true;
 
-      console.log("Intro complete");
       logStep("Intro Complete");
       releaseIntroLock();
 
@@ -115,7 +110,6 @@ export default function CinematicIntro() {
     }
 
     logStep("Intro Start");
-    console.log("Intro sequence started");
     document.documentElement.classList.add("is-intro-active");
     video.pause();
     video.load();
@@ -140,8 +134,6 @@ export default function CinematicIntro() {
 
       setActiveLine(lineKey);
       await waitForPaint();
-
-      console.log("Intro active line:", lineKey);
 
       const el = lineRef.current;
       if (!el) {
@@ -201,8 +193,6 @@ export default function CinematicIntro() {
 
     const runVideoExpansion = async () => {
       if (!isActive()) return;
-
-      console.log("Video reveal started");
 
       await waitForVideo();
       if (!isActive()) return;

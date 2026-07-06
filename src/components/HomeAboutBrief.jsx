@@ -27,14 +27,7 @@ export default function HomeAboutBrief() {
       const words = gsap.utils.toArray(section.querySelectorAll(".about-word"));
       const button = section.querySelector(".home-about-button");
 
-      console.log("[HomeAboutBrief] mounted");
-      console.log("[HomeAboutBrief] words found:", words.length);
-      console.log("[HomeAboutBrief] button found:", !!button);
-
-      if (!words.length) {
-        console.warn("[HomeAboutBrief] No .about-word elements found — text stays visible.");
-        return;
-      }
+      if (!words.length) return;
 
       gsap.set(words, { opacity: 0, y: 32, scale: 0.96, filter: "blur(12px)" });
       if (button) gsap.set(button, { opacity: 0, y: 24, scale: 0.96 });
@@ -45,7 +38,6 @@ export default function HomeAboutBrief() {
           start: "top 75%",
           end: "bottom 35%",
           scrub: 1,
-          markers: true,
           invalidateOnRefresh: true,
         },
       });
@@ -69,7 +61,6 @@ export default function HomeAboutBrief() {
 
       refreshId = setTimeout(() => {
         ScrollTrigger.refresh();
-        console.log("[HomeAboutBrief] ScrollTrigger refreshed");
       }, 150);
     }, section);
 
