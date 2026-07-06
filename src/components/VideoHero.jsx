@@ -6,7 +6,6 @@ import { useIntroExperience } from "@/components/intro/IntroExperienceProvider";
 import { HERO_STORY_STEPS } from "@/data/heroStorySteps";
 import HeroScrollIndicator from "@/components/HeroScrollIndicator";
 import HomeGlitchReveal from "@/components/HomeGlitchReveal";
-import HomeAboutBrief from "@/components/HomeAboutBrief";
 import HomeTrustedSection from "@/components/HomeTrustedSection";
 
 const STORY_STEP = 1;
@@ -261,7 +260,6 @@ export default function VideoHero() {
       </div>
 
       <HomeGlitchReveal />
-      <HomeAboutBrief />
       <HomeTrustedSection />
     </section>
   );
