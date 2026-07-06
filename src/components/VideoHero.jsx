@@ -7,6 +7,7 @@ import { HERO_STORY_STEPS } from "@/data/heroStorySteps";
 import HeroScrollIndicator from "@/components/HeroScrollIndicator";
 import HomeGlitchReveal from "@/components/HomeGlitchReveal";
 import HomeTrustedSection from "@/components/HomeTrustedSection";
+import HomeAboutBrief from "@/components/HomeAboutBrief";
 
 const STORY_STEP = 1;
 const STORY_FADE = 0.2;
@@ -261,6 +262,7 @@ export default function VideoHero() {
 
       <HomeGlitchReveal />
       <HomeTrustedSection />
+      <HomeAboutBrief />
     </section>
   );
 }

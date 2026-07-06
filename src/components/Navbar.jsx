@@ -55,7 +55,7 @@ export default function Navbar() {
           autoAlpha: 1,
           y: 0,
           scale: 1,
-          filter: "blur(0px)",
+          filter: "blur(0px)",    
           duration: ENTER_DURATION,
           ease: "power3.out",
         },
