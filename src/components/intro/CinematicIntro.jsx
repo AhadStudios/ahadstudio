@@ -31,6 +31,15 @@ function tweenTo(target, vars) {
   });
 }
 
+/** Wait for React commit + paint after setState (replaces flushSync). */
+function waitForPaint() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(resolve);
+    });
+  });
+}
+
 export default function CinematicIntro() {
   const overlayRef = useRef(null);
   const portalRef = useRef(null);
@@ -41,6 +50,10 @@ export default function CinematicIntro() {
   const sequenceIdRef = useRef(0);
   const [activeLine, setActiveLine] = useState(null);
   const { introComplete, completeIntro } = useIntroExperience();
+
+  useEffect(() => {
+    console.log("CinematicIntro mounted");
+  }, []);
 
   useEffect(() => {
     completeIntroRef.current = completeIntro;
@@ -74,6 +87,7 @@ export default function CinematicIntro() {
       if (!isActive() || finishedRef.current) return;
       finishedRef.current = true;
 
+      console.log("Intro complete");
       logStep("Intro Complete");
       releaseIntroLock();
 
@@ -101,6 +115,7 @@ export default function CinematicIntro() {
     }
 
     logStep("Intro Start");
+    console.log("Intro sequence started");
     document.documentElement.classList.add("is-intro-active");
     video.pause();
     video.load();
@@ -123,13 +138,10 @@ export default function CinematicIntro() {
     const showLine = async (lineKey) => {
       if (!isActive()) return;
 
-      // Queue as a microtask so React is not mid-render when setState fires
-      await new Promise((resolve) => {
-        queueMicrotask(() => {
-          setActiveLine(lineKey);
-          resolve();
-        });
-      });
+      setActiveLine(lineKey);
+      await waitForPaint();
+
+      console.log("Intro active line:", lineKey);
 
       const el = lineRef.current;
       if (!el) {
@@ -159,9 +171,8 @@ export default function CinematicIntro() {
       });
       if (!isActive()) return;
 
-      flushSync(() => {
-        setActiveLine(null);
-      });
+      setActiveLine(null);
+      await waitForPaint();
     };
 
     const waitForVideo = () =>
@@ -190,6 +201,8 @@ export default function CinematicIntro() {
 
     const runVideoExpansion = async () => {
       if (!isActive()) return;
+
+      console.log("Video reveal started");
 
       await waitForVideo();
       if (!isActive()) return;

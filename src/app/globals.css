@@ -5294,18 +5294,15 @@ video {
 }
 
 /* ================================================
-   Home About Brief — pinned word/char scatter animation
+   Home About Brief
    ================================================ */
 .home-about-brief {
   background: #000;
-  /* min-height so the pin spacer renders correctly */
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* clip horizontal overflow only; vertical must stay visible for the scatter */
-  overflow-x: clip;
-  overflow-y: visible;
+  overflow: hidden;
   pointer-events: all;
 }
 
@@ -5321,6 +5318,7 @@ video {
   text-align: center;
 }
 
+/* Always visible — GSAP hides via gsap.set() only after mount */
 .home-about-title {
   font-size: clamp(1.45rem, 3.2vw, 2.25rem);
   font-weight: 700;
@@ -5328,29 +5326,24 @@ video {
   color: #fff;
   letter-spacing: -0.025em;
   margin: 0;
-  /* prevent layout reflow when chars move */
-  position: relative;
+  opacity: 1;
+  visibility: visible;
 }
 
-/* Each word is one GSAP-animated unit */
 .about-word {
   display: inline-block;
   white-space: nowrap;
   will-change: transform, opacity, filter;
+  /* Visible by default */
+  opacity: 1;
 }
 
-/* Non-animated space between words */
 .about-space {
   display: inline-block;
   width: 0.28em;
 }
 
-/* Visible by default — GSAP hides/reveals at runtime.
-   If JS fails for any reason, text stays readable. */
-.about-char {
-  display: inline-block;
-}
-
+/* Always visible by default */
 .home-about-button {
   display: inline-flex;
   align-items: center;
@@ -5364,7 +5357,7 @@ video {
   letter-spacing: 0.01em;
   cursor: pointer;
   will-change: transform, opacity;
-  /* Visible by default — GSAP controls opacity during animation */
+  opacity: 1;
 }
 
 /* ================================================
