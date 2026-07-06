@@ -49,7 +49,7 @@ export default function RootLayout({ children }) {
                 <IntroExperienceProvider>
                   <CinematicIntro />
                   <SiteChrome />
-                  <main className="site-main">{children}</main>
+                  <main className="site-main" suppressHydrationWarning>{children}</main>
                 </IntroExperienceProvider>
               </NavMenuProvider>
             </ShowcaseNavMenuProvider>

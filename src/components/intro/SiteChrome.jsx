@@ -9,7 +9,10 @@ export default function SiteChrome() {
   const { introComplete } = useIntroExperience();
 
   return (
-    <div className={`site-chrome${introComplete ? " is-visible" : ""}`}>
+    <div
+      className={`site-chrome${introComplete ? " is-visible" : ""}`}
+      suppressHydrationWarning
+    >
       <Cursor />
       <Navbar />
       <GlassWidget />
