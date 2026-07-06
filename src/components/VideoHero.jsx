@@ -9,6 +9,7 @@ import HomeGlitchReveal from "@/components/HomeGlitchReveal";
 import HomeTrustedSection from "@/components/HomeTrustedSection";
 import HomeAboutBrief from "@/components/HomeAboutBrief";
 import HomeFAQ from "@/components/HomeFAQ";
+import HomeFinalThanks from "@/components/HomeFinalThanks";
 
 const STORY_STEP = 1;
 const STORY_FADE = 0.2;
@@ -265,6 +266,7 @@ export default function VideoHero() {
       <HomeTrustedSection />
       <HomeAboutBrief />
       <HomeFAQ />
+      <HomeFinalThanks />
     </section>
   );
 }
