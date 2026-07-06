@@ -12,11 +12,15 @@ const ROTATE_MS = 3000;
 export default function WorldClockWidget({ active = false, compact = false }) {
   const lineRef = useRef(null);
   const [cityIndex, setCityIndex] = useState(0);
-  const [timeLabel, setTimeLabel] = useState(() =>
-    formatCityTime(WORLD_CLOCK_CITIES[0].timeZone),
-  );
+  // Start empty so SSR and initial client HTML match; useEffect fills in the real time
+  const [timeLabel, setTimeLabel] = useState("");
 
   const city = WORLD_CLOCK_CITIES[cityIndex];
+
+  // Populate time on client only — avoids server/client mismatch
+  useEffect(() => {
+    setTimeLabel(formatCityTime(city.timeZone));
+  }, [city.timeZone]);
 
   useEffect(() => {
     if (!active) return undefined;

@@ -39,8 +39,9 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       className={`${manrope.variable} ${cormorant.variable} ${pinyonScript.variable}`}
+      suppressHydrationWarning
     >
-      <body>
+      <body suppressHydrationWarning>
         <SmoothScroll>
           <ShowcaseScrollProvider>
             <ShowcaseNavMenuProvider>
