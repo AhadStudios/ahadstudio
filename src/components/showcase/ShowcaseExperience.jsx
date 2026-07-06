@@ -13,7 +13,6 @@ import VideoHero from "@/components/VideoHero";
 import ToolsStack from "@/components/tools-stack/ToolsStack";
 import ContactPage from "@/components/contact/ContactPage";
 import WorkPage from "@/components/showcase/WorkPage";
-import ShowcaseNav from "@/components/showcase/ShowcaseNav";
 
 const SCROLLABLE_PANELS = new Set(["hero", "work", "stack", "contact"]);
 
@@ -56,7 +55,7 @@ export default function ShowcaseExperience() {
   const isAnimatingRef = useRef(false);
   const activeIdRef = useRef(HERO_PANEL_ID);
   const hasNavigatedRef = useRef(false);
-  const { isMenuOpen, closeMenu } = useShowcaseNavMenu();
+  const { closeMenu, registerNavigateTo } = useShowcaseNavMenu();
 
   const [activeId, setActiveId] = useState(HERO_PANEL_ID);
   const [loadedPanels, setLoadedPanels] = useState(() => new Set([HERO_PANEL_ID]));
@@ -344,6 +343,11 @@ export default function ShowcaseExperience() {
     [closeMenu, switchPanel],
   );
 
+  useEffect(() => {
+    registerNavigateTo(handleNavSelect);
+    return () => registerNavigateTo(() => {});
+  }, [handleNavSelect, registerNavigateTo]);
+
   return (
     <div
       className={`showcase-experience showcase-experience--hamburger${
@@ -351,15 +355,6 @@ export default function ShowcaseExperience() {
       }`}
       ref={shellRef}
     >
-      {introComplete ? (
-        <ShowcaseNav
-          menuOpen={isMenuOpen}
-          activeId={activeId}
-          disabled={isAnimating}
-          onSelect={handleNavSelect}
-          onCloseMenu={closeMenu}
-        />
-      ) : null}
 
       <div className="showcase-stage">
         {ALL_PANEL_IDS.map((panelId) => (

@@ -2,11 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "@/animations/helpers";
-import Hamburger from "@/components/Hamburger";
 import WorldClockWidget from "@/components/WorldClockWidget";
+import PageDropdownMenu from "@/components/PageDropdownMenu";
 import { useIntroExperience } from "@/components/intro/IntroExperienceProvider";
-import { useNavMenu } from "@/components/NavMenuProvider";
-import { useShowcaseNavMenu } from "@/context/ShowcaseNavMenuContext";
 import {
   INTERNAL_PANEL_IDS,
   useShowcaseScroll,
@@ -16,14 +14,7 @@ const ENTER_DURATION = 0.65;
 const EXIT_DURATION = 0.4;
 
 export default function Navbar() {
-  const { close: closeLegacyNav } = useNavMenu();
-  const { isMenuOpen, toggleMenu } = useShowcaseNavMenu();
   const { introComplete } = useIntroExperience();
-
-  const handleMenuClick = () => {
-    closeLegacyNav();
-    toggleMenu();
-  };
   const { activePanelId, isShowcaseActive } = useShowcaseScroll();
 
   const heroRef = useRef(null);
@@ -123,15 +114,7 @@ export default function Navbar() {
         </a>
 
         <div className="navbar-actions">
-          {/* <a href="#work" className="view-works">
-            View Works
-          </a> */}
-          <Hamburger
-            onClick={handleMenuClick}
-            aria-expanded={isMenuOpen}
-            aria-label={isMenuOpen ? "Close section menu" : "Open section menu"}
-            className={isMenuOpen ? "is-open" : ""}
-          />
+          <PageDropdownMenu />
         </div>
       </header>
 
@@ -151,12 +134,7 @@ export default function Navbar() {
           </a>
 
           <div className="navbar-pill-slot navbar-pill-slot--end">
-            <Hamburger
-              className={`hamburger--pill${isMenuOpen ? " is-open" : ""}`}
-              onClick={handleMenuClick}
-              aria-expanded={isMenuOpen}
-              aria-label={isMenuOpen ? "Close section menu" : "Open section menu"}
-            />
+            <PageDropdownMenu />
           </div>
         </div>
       </header>

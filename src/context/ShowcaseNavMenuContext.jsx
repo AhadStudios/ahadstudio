@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -13,10 +14,13 @@ const ShowcaseNavMenuContext = createContext({
   isMenuOpen: false,
   toggleMenu: () => {},
   closeMenu: () => {},
+  navigateTo: () => {},
+  registerNavigateTo: () => {},
 });
 
 export function ShowcaseNavMenuProvider({ children }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigateToRef = useRef(() => {});
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((open) => !open);
@@ -24,6 +28,14 @@ export function ShowcaseNavMenuProvider({ children }) {
 
   const closeMenu = useCallback(() => {
     setIsMenuOpen(false);
+  }, []);
+
+  const registerNavigateTo = useCallback((fn) => {
+    navigateToRef.current = fn;
+  }, []);
+
+  const navigateTo = useCallback((panelId) => {
+    navigateToRef.current(panelId);
   }, []);
 
   useEffect(() => {
@@ -38,8 +50,8 @@ export function ShowcaseNavMenuProvider({ children }) {
   }, [isMenuOpen, closeMenu]);
 
   const value = useMemo(
-    () => ({ isMenuOpen, toggleMenu, closeMenu }),
-    [isMenuOpen, toggleMenu, closeMenu],
+    () => ({ isMenuOpen, toggleMenu, closeMenu, navigateTo, registerNavigateTo }),
+    [isMenuOpen, toggleMenu, closeMenu, navigateTo, registerNavigateTo],
   );
 
   return (
