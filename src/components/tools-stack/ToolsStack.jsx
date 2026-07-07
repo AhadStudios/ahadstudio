@@ -135,7 +135,7 @@ export default function ToolsStack() {
           </div>
 
           <AnimatedButton
-            href="#tools"
+            panelId="stack"
             label="Explore Stack"
             className="tools-stack-explore"
           />
@@ -156,7 +156,7 @@ export default function ToolsStack() {
             <span className="tools-stack-footer-dot" aria-hidden="true" />
             Always learning. Always building.
           </p>
-          <AnimatedButton href="/contact" label="Let's Build Something Great" />
+          <AnimatedButton panelId="contact" label="Let's Build Something Great" />
         </footer>
       </div>
     </section>

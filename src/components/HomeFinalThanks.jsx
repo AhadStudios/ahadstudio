@@ -4,6 +4,7 @@ import { useCallback, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useIntroExperience } from "@/components/intro/IntroExperienceProvider";
+import { usePanelNavigate } from "@/hooks/usePanelNavigate";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -56,6 +57,7 @@ function padIndex(value) {
 
 export default function HomeFinalThanks() {
   const { introComplete } = useIntroExperience();
+  const { goToContact } = usePanelNavigate();
   const sectionRef = useRef(null);
   const closingRef = useRef(null);
   const progressCurrentRef = useRef(null);
@@ -346,22 +348,24 @@ export default function HomeFinalThanks() {
           digital experience.
         </p>
         <div className="final-actions final-closing-part">
-          <a
-            href="#contact"
+          <button
+            type="button"
             className="final-btn final-btn-primary"
+            onClick={goToContact}
             onMouseMove={handleMagneticMove}
             onMouseLeave={handleMagneticLeave}
           >
             Start a Project
-          </a>
-          <a
-            href="#contact"
+          </button>
+          <button
+            type="button"
             className="final-btn final-btn-secondary"
+            onClick={goToContact}
             onMouseMove={handleMagneticMove}
             onMouseLeave={handleMagneticLeave}
           >
             Contact Me
-          </a>
+          </button>
         </div>
       </div>
     </section>

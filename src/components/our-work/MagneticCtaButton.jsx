@@ -2,11 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "@/animations/helpers";
+import { usePanelNavigate } from "@/hooks/usePanelNavigate";
 
 export default function MagneticCtaButton({
   href = "/contact",
+  panelId,
   label = "Start A Project",
 }) {
+  const { navigateTo } = usePanelNavigate();
   const wrapRef = useRef(null);
   const btnRef = useRef(null);
   const glowRef = useRef(null);
@@ -53,10 +56,21 @@ export default function MagneticCtaButton({
     };
   }, []);
 
+  const handleClick = (event) => {
+    if (!panelId) return;
+    event.preventDefault();
+    navigateTo(panelId);
+  };
+
   return (
     <div className="our-work-magnetic-cta" ref={wrapRef}>
       <span className="our-work-magnetic-cta-glow" ref={glowRef} aria-hidden="true" />
-      <a href={href} className="our-work-magnetic-cta-btn" ref={btnRef}>
+      <a
+        href={panelId ? "#" : href}
+        className="our-work-magnetic-cta-btn"
+        ref={btnRef}
+        onClick={handleClick}
+      >
         <span className="our-work-magnetic-cta-label">{label}</span>
         <span className="our-work-magnetic-cta-arrow" aria-hidden="true">
           →

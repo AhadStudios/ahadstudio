@@ -1,4 +1,7 @@
+"use client";
+
 import CircularArrow from "@/components/our-work/CircularArrow";
+import { usePanelNavigate } from "@/hooks/usePanelNavigate";
 
 function ChartIcon() {
   return (
@@ -29,6 +32,7 @@ function PlayIcon() {
 
 export default function AnimatedButton({
   href = "#",
+  panelId,
   label,
   showArrow = true,
   variant = "text",
@@ -36,12 +40,23 @@ export default function AnimatedButton({
   className = "",
   ariaLabel,
 }) {
+  const { navigateTo } = usePanelNavigate();
+
+  const handleClick = (event) => {
+    if (!panelId) return;
+    event.preventDefault();
+    navigateTo(panelId);
+  };
+
+  const resolvedHref = panelId ? "#" : href;
+
   if (variant === "circle") {
     return (
       <a
-        href={href}
+        href={resolvedHref}
         className={`our-work-btn our-work-btn--circle ${className}`.trim()}
         aria-label={ariaLabel || label}
+        onClick={handleClick}
       >
         <CircularArrow />
       </a>
@@ -51,9 +66,10 @@ export default function AnimatedButton({
   if (variant === "play") {
     return (
       <a
-        href={href}
+        href={resolvedHref}
         className={`our-work-btn our-work-btn--play ${className}`.trim()}
         aria-label={ariaLabel || "Play"}
+        onClick={handleClick}
       >
         <span className="our-work-btn-play-ring" aria-hidden="true" />
         <span className="our-work-btn-play-icon">
@@ -67,9 +83,10 @@ export default function AnimatedButton({
 
   return (
     <a
-      href={href}
+      href={resolvedHref}
       className={`our-work-btn our-work-btn--${variant} ${className}`.trim()}
       aria-label={ariaLabel || label}
+      onClick={handleClick}
     >
       <span className="our-work-btn-inner">
         {label && <span className="our-work-btn-label">{label}</span>}

@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
 import { gsap, ScrollTrigger } from "@/animations/helpers";
 import { getPanelScroller, prefersReducedMotion } from "@/animations/panelScroll";
+import PanelNavLink from "@/components/PanelNavLink";
 import MagneticCtaButton from "@/components/our-work/MagneticCtaButton";
 import WorkCtaPrism from "@/components/our-work/WorkCtaPrism";
 
@@ -85,13 +85,13 @@ export default function WorkClosingCTA() {
             </p>
 
             <div className="work-closing-cta-actions" data-work-cta-reveal>
-              <Link
-                href="/contact"
+              <PanelNavLink
+                panelId="contact"
                 className="work-closing-cta-btn work-closing-cta-btn--ghost"
               >
                 Book A Call
-              </Link>
-              <MagneticCtaButton href="/contact" label="Start A Project" />
+              </PanelNavLink>
+              <MagneticCtaButton panelId="contact" label="Start A Project" />
             </div>
           </div>
 

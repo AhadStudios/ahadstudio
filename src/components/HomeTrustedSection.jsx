@@ -4,6 +4,7 @@ import { useCallback, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useIntroExperience } from "@/components/intro/IntroExperienceProvider";
+import { usePanelNavigate } from "@/hooks/usePanelNavigate";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -76,8 +77,25 @@ function ArrowBtn() {
   );
 }
 
+function CardFooter({ brand }) {
+  const { goToWork } = usePanelNavigate();
+
+  return (
+    <button
+      type="button"
+      className="trusted-card-footer"
+      onClick={goToWork}
+      aria-label={`View ${brand} on Work`}
+    >
+      <span className="trusted-brand-label">{brand}</span>
+      <ArrowBtn />
+    </button>
+  );
+}
+
 export default function HomeTrustedSection() {
   const { introComplete } = useIntroExperience();
+  const { goToContact } = usePanelNavigate();
   const sectionRef = useRef(null);
   const gridRef = useRef(null);
   const m1ValueRef = useRef(null);
@@ -592,7 +610,7 @@ export default function HomeTrustedSection() {
       <div className="home-trusted-inner">
         <div className="home-trusted-header">
           <h2 className="home-trusted-title">Trusted by industry leaders</h2>
-          <button type="button" className="home-trusted-cta">
+          <button type="button" className="home-trusted-cta" onClick={goToContact}>
             Work with us
           </button>
         </div>
@@ -670,10 +688,7 @@ export default function HomeTrustedSection() {
               <span className="trusted-author-name">Alex Chen</span>
               <span className="trusted-author-role">Founder, Nextura</span>
             </div>
-            <div className="trusted-card-footer">
-              <span className="trusted-brand-label">nextura</span>
-              <ArrowBtn />
-            </div>
+            <CardFooter brand="nextura" />
           </div>
 
           <div
@@ -689,10 +704,7 @@ export default function HomeTrustedSection() {
               </span>
               <span className="trusted-metric-label">Time to Market Launch</span>
             </div>
-            <div className="trusted-card-footer">
-              <span className="trusted-brand-label">novahq</span>
-              <ArrowBtn />
-            </div>
+            <CardFooter brand="novahq" />
           </div>
 
           <div
@@ -710,10 +722,7 @@ export default function HomeTrustedSection() {
                 Increase in Engagement
               </span>
             </div>
-            <div className="trusted-card-footer">
-              <span className="trusted-brand-label">arclight</span>
-              <ArrowBtn />
-            </div>
+            <CardFooter brand="arclight" />
           </div>
 
           <div
@@ -727,10 +736,7 @@ export default function HomeTrustedSection() {
               We helped Meridian rebrand and launch their new platform,
               resulting in 12M+ users within the first quarter.
             </p>
-            <div className="trusted-card-footer">
-              <span className="trusted-brand-label">Meridian</span>
-              <ArrowBtn />
-            </div>
+            <CardFooter brand="Meridian" />
           </div>
         </div>
       </div>

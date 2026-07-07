@@ -5607,6 +5607,15 @@ video {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
 .trusted-brand-label {
@@ -6176,6 +6185,7 @@ video {
   letter-spacing: 0.01em;
   text-decoration: none;
   cursor: pointer;
+  font-family: inherit;
   will-change: transform;
   transition:
     background 0.28s ease,
@@ -6249,5 +6259,23 @@ video {
   .final-thanks-grain {
     animation: none;
   }
+}
+
+/* Panel navigation: button elements reusing link CTA classes */
+button.book-a-call,
+button.services-showcase-cta {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+button.work-closing-cta-btn,
+button.work-page-cta-link {
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
 }
  

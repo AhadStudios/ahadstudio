@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
+import PanelNavLink from "@/components/PanelNavLink";
 import { projects } from "@/data/projects";
 import { gsap, ScrollTrigger } from "@/animations/helpers";
 import AnimatedButton from "@/components/our-work/AnimatedButton";
@@ -145,7 +145,7 @@ export default function OurWork({ variant = "full" }) {
               A selection of digital experiences we&apos;ve crafted for
               forward-thinking brands and startups across the globe.
             </p>
-            <AnimatedButton href="#work" label="View All Projects" />
+            <AnimatedButton panelId="work" label="View All Projects" />
           </header>
 
           <div className="our-work-list" ref={listRef}>
@@ -170,13 +170,13 @@ export default function OurWork({ variant = "full" }) {
             </div>
 
             <div className="work-page-cta-actions" data-our-work-footer-item>
-              <Link
-                href="/contact"
+              <PanelNavLink
+                panelId="contact"
                 className="work-page-cta-link work-page-cta-link--primary"
               >
                 Book A Call
-              </Link>
-              <MagneticCtaButton href="/contact" label="Start A Project" />
+              </PanelNavLink>
+              <MagneticCtaButton panelId="contact" label="Start A Project" />
             </div>
           </div>
         </div>
@@ -202,7 +202,7 @@ export default function OurWork({ variant = "full" }) {
             </div>
 
             <div data-our-work-footer-item>
-              <MagneticCtaButton href="/contact" label="Start A Project" />
+              <MagneticCtaButton panelId="contact" label="Start A Project" />
             </div>
           </div>
         </div>
@@ -226,7 +226,7 @@ export default function OurWork({ variant = "full" }) {
             A selection of digital experiences we&apos;ve crafted for
             forward-thinking brands and startups across the globe.
           </p>
-          <AnimatedButton href="#work" label="View All Projects" />
+          <AnimatedButton panelId="work" label="View All Projects" />
         </header>
 
         <div className="our-work-list" ref={listRef}>
@@ -244,7 +244,7 @@ export default function OurWork({ variant = "full" }) {
           </div>
 
           <div data-our-work-footer-item>
-            <MagneticCtaButton href="/contact" label="Start A Project" />
+            <MagneticCtaButton panelId="contact" label="Start A Project" />
           </div>
 
           <div className="our-work-footer-prism" aria-hidden="true">

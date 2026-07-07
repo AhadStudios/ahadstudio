@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useIntroExperience } from "@/components/intro/IntroExperienceProvider";
+import { usePanelNavigate } from "@/hooks/usePanelNavigate";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,6 +15,7 @@ const WORDS = TEXT.split(" ");
 
 export default function HomeAboutBrief() {
   const { introComplete } = useIntroExperience();
+  const { goToContact } = usePanelNavigate();
   const sectionRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -119,7 +121,7 @@ export default function HomeAboutBrief() {
           ))}
         </h2>
 
-        <button type="button" className="home-about-button">
+        <button type="button" className="home-about-button" onClick={goToContact}>
           More about us
         </button>
       </div>

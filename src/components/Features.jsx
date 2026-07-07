@@ -269,9 +269,9 @@ export default function Features({ variant = "full", part = "full", isActive = t
               uses research, data, and thoughtful design to create delightful
               products that scale.
             </p>
-            <a href="/contact" className="services-showcase-cta">
+            <PanelNavLink panelId="contact" className="services-showcase-cta">
               Get in touch →
-            </a>
+            </PanelNavLink>
           </div>
         </header>
         ) : null}

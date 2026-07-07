@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import PanelNavLink from "@/components/PanelNavLink";
 import { useEffect, useRef } from "react";
 import { Draggable, gsap, ScrollTrigger } from "@/animations/helpers";
 import { getPanelScroller, prefersReducedMotion } from "@/animations/panelScroll";
@@ -296,9 +296,9 @@ export default function ProjectsSlider() {
           </p>
           <div className="hero-cta-block" data-work-slider-reveal>
             <div className="hero-cta-row">
-              <Link href="/contact" className="book-a-call">
+              <PanelNavLink panelId="contact" className="book-a-call">
                 Book A Call
-              </Link>
+              </PanelNavLink>
               <span className="spinner" aria-hidden="true">
                 <span className="spinner-dot" />
                 <span className="spinner-dot" />
