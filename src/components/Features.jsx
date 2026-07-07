@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
+import PanelNavLink from "@/components/PanelNavLink";
 import { devStickers } from "@/data/devStickers";
 import { showcasePeople } from "@/data/serviceLabels";
 import { getShowcaseDefault } from "@/data/showcaseDefaults";
